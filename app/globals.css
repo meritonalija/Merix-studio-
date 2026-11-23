@@ -116,3 +116,9 @@ html,body{max-width:100%;overflow-x:hidden}
 .brand>img{width:126px!important;height:64px!important;object-fit:contain!important;margin:0!important;display:block!important;filter:drop-shadow(0 0 2px #ffffff44)!important;animation:none!important}
 .footerNew>img{width:110px!important;height:60px!important;object-fit:contain!important;filter:none!important;animation:none!important}
 @media(max-width:600px){.brand{width:116px!important;flex-basis:116px!important;height:58px!important}.brand>img{width:116px!important;height:58px!important}}
+
+/* Original MERIX lockup: keep entire logo visible, proportional and compact */
+.brand{width:145px!important;flex-basis:145px!important;height:68px!important;overflow:visible!important;display:flex!important;align-items:center!important}
+.brand>img{width:145px!important;height:auto!important;max-height:68px!important;object-fit:contain!important;object-position:center!important;filter:none!important;animation:none!important}
+.footerNew>img{width:130px!important;height:auto!important;max-height:70px!important;object-fit:contain!important}
+@media(max-width:600px){.brand{width:128px!important;flex-basis:128px!important;height:60px!important}.brand>img{width:128px!important;height:auto!important;max-height:60px!important}}
