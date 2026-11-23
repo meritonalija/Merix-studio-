@@ -288,8 +288,8 @@ html,body{max-width:100%;overflow-x:hidden}
 
 .portfolioCards {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2.5vw, 32px);
 }
 
 .portfolioCard {
@@ -311,7 +311,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .portfolioVisual {
   position: relative;
   isolation: isolate;
-  aspect-ratio: 1.52;
+  aspect-ratio: 1.7;
   overflow: hidden;
   border-bottom: 1px solid #ffffff12;
   background:
@@ -320,17 +320,17 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 
 .portfolioMonitor,
-.portfolioLaptop {
+.portfolioPhone {
   position: absolute;
   width: 60%;
   transition: transform 320ms ease;
 }
 
-.portfolioMonitor { top: 13%; right: 9%; }
-.portfolioLaptop { top: 41%; left: 9%; width: 50%; }
+.portfolioMonitor { top: 9%; right: 6%; width: 65%; }
+.portfolioPhone { bottom: 8%; left: 11%; width: 20%; }
 
 .portfolioCard:hover .portfolioMonitor { transform: translate(2%, -3%); }
-.portfolioCard:hover .portfolioLaptop { transform: translate(-2%, -2%); }
+.portfolioCard:hover .portfolioPhone { transform: translate(-2%, -2%); }
 
 .portfolioScreen {
   position: relative;
@@ -349,8 +349,7 @@ html,body{max-width:100%;overflow-x:hidden}
   object-fit: cover;
 }
 
-.portfolioMonitor::after,
-.portfolioLaptop::after {
+.portfolioMonitor::after {
   position: absolute;
   top: 100%;
   content: "";
@@ -364,12 +363,20 @@ html,body{max-width:100%;overflow-x:hidden}
   clip-path: polygon(33% 0, 67% 0, 74% 74%, 100% 84%, 100% 100%, 0 100%, 0 84%, 26% 74%);
 }
 
-.portfolioLaptop::after {
-  left: -8%;
-  width: 116%;
-  height: 6%;
-  border-radius: 0 0 45% 45%;
-  background: linear-gradient(#b5b9bd, #5e6469);
+.portfolioPhone .portfolioScreen {
+  aspect-ratio: 1 / 2;
+  border-width: clamp(3px, .45vw, 6px);
+  border-radius: clamp(8px, 1.6vw, 18px);
+}
+
+.portfolioPhone .portfolioSampleBody {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  padding: 9%;
+}
+
+.portfolioPhone .portfolioSampleBar span {
+  display: none;
 }
 
 .portfolioSample {
@@ -484,6 +491,8 @@ html,body{max-width:100%;overflow-x:hidden}
 .portfolioLink,
 .portfolioPreviewNote { margin-top: auto; }
 
+.portfolioPreviewNote + .portfolioLink { margin-top: 12px; }
+
 .portfolioLink {
   display: inline-flex;
   align-items: center;
@@ -502,15 +511,11 @@ html,body{max-width:100%;overflow-x:hidden}
   color: #ff8a92;
 }
 
-@media (max-width: 1020px) {
-  .portfolioCards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-@media (max-width: 580px) {
+@media (max-width: 700px) {
   .portfolioCards { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .portfolioCard:hover .portfolioMonitor,
-  .portfolioCard:hover .portfolioLaptop { transform: none; }
+  .portfolioCard:hover .portfolioPhone { transform: none; }
 }

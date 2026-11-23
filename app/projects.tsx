@@ -3,6 +3,8 @@ import { ArrowUpRight } from "lucide-react";
 const projects = [
   {
     id: "alfa", name: "ALFA PLAST", type: "SCHÜCO PVC SYSTEMS",
+    url: "https://www.alfaplast.mk/",
+    hasScreenshots: true,
     summary: {
       SQ: "Prezantim i sistemeve PVC dhe zgjidhjeve për dritare e dyer.",
       EN: "A showcase for PVC systems and window and door solutions.",
@@ -11,6 +13,8 @@ const projects = [
   },
   {
     id: "besa", name: "BESA PAN", type: "ALUMINIUM ENTRANCE DOORS",
+    url: "https://besa-pan-website.vercel.app/",
+    hasScreenshots: true,
     summary: {
       SQ: "Prezantim i koleksionit të dyerve hyrëse prej alumini.",
       EN: "A showcase for a collection of aluminium entrance doors.",
@@ -20,6 +24,7 @@ const projects = [
   {
     id: "lani", name: "LANI KOMPANI", type: "WINDOWS · DOORS · FACADES",
     url: "https://lanikompani.vercel.app",
+    hasScreenshots: true,
     summary: {
       SQ: "Webfaqe me katalog për dritare, dyer dhe fasada.",
       EN: "A website and catalog for windows, doors, and façades.",
@@ -29,6 +34,7 @@ const projects = [
   {
     id: "culi", name: "CULI AUTO TRANSPORT", type: "INTERNATIONAL VEHICLE TRANSPORT",
     url: "https://culiautotransport.vercel.app",
+    hasScreenshots: true,
     summary: {
       SQ: "Webfaqe për shërbimet e transportit ndërkombëtar të automjeteve.",
       EN: "A website for an international vehicle transport service.",
@@ -53,9 +59,9 @@ const labels = {
 
 type Project = (typeof projects)[number];
 
-function ProjectScreen({ project, compact }: { project: Project; compact: boolean }) {
-  if ("url" in project) {
-    return <img src={`/projects/${project.id}-${compact ? "compact" : "desktop"}.webp`} width="800" height={compact ? 498 : 500} loading="lazy" alt="" />;
+function ProjectScreen({ project, mobile }: { project: Project; mobile: boolean }) {
+  if ("hasScreenshots" in project) {
+    return <img src={`/projects/${project.id}-${mobile ? "mobile" : "desktop"}.webp`} width={mobile ? 390 : 800} height={mobile ? 780 : 500} loading="lazy" alt="" />;
   }
 
   return (
@@ -84,21 +90,22 @@ export function ProjectCards({ lang }: { lang: keyof typeof labels }) {
         <article className={`portfolioCard portfolioCard--${project.id}`} key={project.id}>
           <div className="portfolioVisual" aria-hidden="true">
             <div className="portfolioMonitor">
-              <div className="portfolioScreen"><ProjectScreen project={project} compact={false} /></div>
+              <div className="portfolioScreen"><ProjectScreen project={project} mobile={false} /></div>
             </div>
-            <div className="portfolioLaptop">
-              <div className="portfolioScreen"><ProjectScreen project={project} compact /></div>
+            <div className="portfolioPhone">
+              <div className="portfolioScreen"><ProjectScreen project={project} mobile /></div>
             </div>
           </div>
           <div className="portfolioInfo">
             <p className="portfolioType">{project.type}</p>
             <h3>{project.name}</h3>
             <p className="portfolioDescription">{project.summary[lang]}</p>
-            {"url" in project ? (
+            {!("hasScreenshots" in project) && <p className="portfolioPreviewNote">{t.illustration}</p>}
+            {"url" in project && (
               <a href={project.url} className="portfolioLink" aria-label={`${t.visit} — ${project.name}`}>
                 {t.visit} <ArrowUpRight size={17} aria-hidden="true" />
               </a>
-            ) : <p className="portfolioPreviewNote">{t.illustration}</p>}
+            )}
           </div>
         </article>
       ))}
