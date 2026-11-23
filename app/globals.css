@@ -68,3 +68,31 @@
 .marqueeNew{min-height:48px;padding:12px 6%;gap:18px;font-size:9px}
 .sectionNew.workNew{padding-top:70px}
 }
+
+/* iPhone layout hardening — no oversized logo or clipped hero */
+html,body{max-width:100%;overflow-x:hidden}
+.topbar{width:100%;min-width:0}
+.brand{flex:0 0 auto;max-width:100%;overflow:hidden}
+.brand img{max-width:100%;display:block}
+.heroNew,.heroInner,.heroNew h1{min-width:0;max-width:100%}
+.heroNew h1 span{max-width:100%}
+@media(max-width:600px){
+.topbar{height:78px!important;padding:0 16px!important;gap:10px!important}
+.brand{width:128px!important;height:65px!important;flex-basis:128px!important}
+.brand img{width:128px!important;height:65px!important;margin:0!important;object-fit:contain!important}
+.headerTools{margin-left:auto;gap:6px}
+.language{gap:1px}
+.language button{padding:4px!important;font-size:10px}
+.menuToggle{padding:4px}
+.navigation{top:78px!important}
+.heroNew{height:auto!important;min-height:0!important}
+.heroNew .heroInner{padding:58px 20px 50px!important}
+.heroNew .eyebrow{font-size:9px!important;letter-spacing:.65px!important;line-height:1.6;white-space:normal}
+.heroNew h1{font-size:clamp(34px,9.1vw,48px)!important;line-height:1.12!important;letter-spacing:-.065em!important;margin:28px 0 26px!important;overflow-wrap:break-word!important}
+.heroNew h1 span{display:block;max-width:100%;white-space:normal!important}
+.heroNew h1 .outlineText{font-size:clamp(28px,7.3vw,38px)!important;letter-spacing:-.065em!important;overflow-wrap:anywhere!important;line-height:1.18!important}
+.heroBottom p{font-size:14px!important;line-height:1.6}
+.heroRail{padding:0 20px 22px!important}
+.heroIndex{display:none!important}
+.sectionHeading h2{font-size:clamp(33px,9vw,42px)!important;overflow-wrap:break-word}
+}
