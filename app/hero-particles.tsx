@@ -29,6 +29,11 @@ function makeParticle(index: number) {
   };
 }
 
+export function heroParticleCenter(width: number, height: number) {
+  const compact = width <= 700;
+  return { x: width * (compact ? .55 : .755), y: height * (compact ? .74 : .46) };
+}
+
 export function HeroParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -49,6 +54,7 @@ export function HeroParticles() {
     let yaw = 0;
     let pitch = 0;
     let scrollProgress = 0;
+    let lightPulse = 0;
     const pointer = { x: 0, y: 0, active: false };
 
     function draw(now: number) {
@@ -58,11 +64,12 @@ export function HeroParticles() {
       previousTime = now;
       const compact = width <= 700;
       const scale = Math.min(width * (compact ? .37 : .24), height * (compact ? .24 : .39), 355);
-      const centerX = width * (compact ? .55 : .755);
-      const centerY = height * (compact ? .74 : .46);
+      const { x: centerX, y: centerY } = heroParticleCenter(width, height);
+      lightPulse *= .92;
       scrollProgress += (Math.max(0, Math.min(1, -hero!.getBoundingClientRect().top / height)) - scrollProgress) * .1;
 
-      const angle = elapsed * .65;
+      const morphTime = Math.max(0, elapsed - 2.9);
+      const angle = morphTime * .65;
       const cycle = Math.max(0, Math.min(1, (.5 - .65 * Math.cos(angle)) + scrollProgress * .85));
       const morph = still ? 0 : cycle * cycle * (3 - 2 * cycle);
       yaw += ((pointer.active ? (pointer.x / width - .5) * .85 : 0) - yaw) * .07;
@@ -88,8 +95,8 @@ export function HeroParticles() {
           const z = point.mz + (point.rz - point.mz) * morph;
           const depth = z * cosY - x * sinY;
           const perspective = 2.8 / (2.8 - depth);
-          const px = centerX + (x * cosY + z * sinY) * scale * perspective;
-          const py = centerY + (y * cosX - depth * sinX) * scale * perspective;
+          const px = centerX + (x * cosY + z * sinY) * scale * perspective * (1 + lightPulse * .13);
+          const py = centerY + (y * cosX - depth * sinX) * scale * perspective * (1 + lightPulse * .13);
           const vx = px - pointer.x;
           const vy = py - pointer.y;
           const distance = pointer.active && !still ? Math.hypot(vx, vy) : reach;
@@ -133,6 +140,10 @@ export function HeroParticles() {
       pointer.active = false;
     }
 
+    const releaseLight = () => {
+      if (!preference.matches) lightPulse = 1;
+    };
+
     const sizeObserver = new ResizeObserver(resize);
     const visibilityObserver = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
@@ -141,6 +152,7 @@ export function HeroParticles() {
 
     sizeObserver.observe(canvas);
     visibilityObserver.observe(hero);
+    canvas.addEventListener("merix-light-arrive", releaseLight);
     hero.addEventListener("pointermove", move, { passive: true });
     hero.addEventListener("pointerleave", leave);
     preference.addEventListener("change", refresh);
@@ -150,6 +162,7 @@ export function HeroParticles() {
       cancelAnimationFrame(frame);
       sizeObserver.disconnect();
       visibilityObserver.disconnect();
+      canvas.removeEventListener("merix-light-arrive", releaseLight);
       hero.removeEventListener("pointermove", move);
       hero.removeEventListener("pointerleave", leave);
       preference.removeEventListener("change", refresh);
