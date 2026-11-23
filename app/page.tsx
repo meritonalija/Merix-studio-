@@ -1,5 +1,5 @@
 "use client";
-import {useEffect,useState} from "react";
+import {useEffect,useState,type PointerEvent} from "react";
 import {ArrowUpRight,ArrowDownRight,Menu,X,MoveUpRight} from "lucide-react";
 import {Pricing} from "./pricing";
 type Lang="SQ"|"EN"|"MK";
@@ -14,8 +14,51 @@ const projects=[
 {id:"04",name:"CULI AUTO TRANSPORT",category:"WEB / TRANSPORT",year:"2026",className:"culi",initial:"CA",caption:"INTERNATIONAL VEHICLE TRANSPORT"},
 {id:"05",name:"ALIJA KOMERC",category:"SOFTWARE / INVOICING",year:"2026",className:"alija",initial:"AK",caption:"BUSINESS OPERATIONS"}];
 const services=[{id:"01",name:"Web Design & Development",desc:"Strategic websites, distinctive interfaces and responsive experiences."},{id:"02",name:"Business Applications",desc:"Custom tools, dashboards, invoicing and smarter workflows."},{id:"03",name:"Interactive Experiences",desc:"Purposeful motion, product storytelling and rich interactions."},{id:"04",name:"SEO & Digital Foundations",desc:"Performance, discoverability and reliable technical setup."}];
+function moveHero(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType === "touch" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const hero = event.currentTarget;
+  const bounds = hero.getBoundingClientRect();
+  const x = (event.clientX - bounds.left) / bounds.width;
+  const y = (event.clientY - bounds.top) / bounds.height;
+
+  hero.style.setProperty("--hero-rotate-x", `${(0.5 - y) * 10}deg`);
+  hero.style.setProperty("--hero-rotate-y", `${(x - 0.5) * 12}deg`);
+  hero.style.setProperty("--hero-light-x", `${x * 100}%`);
+  hero.style.setProperty("--hero-light-y", `${y * 100}%`);
+}
+
+function resetHero(event: PointerEvent<HTMLElement>) {
+  const { style } = event.currentTarget;
+  for (const property of ["--hero-rotate-x", "--hero-rotate-y", "--hero-light-x", "--hero-light-y"]) {
+    style.removeProperty(property);
+  }
+}
+
 export default function Home(){const [lang,setLang]=useState<Lang>("SQ");const [menu,setMenu]=useState(false);const t=dictionary[lang];useEffect(()=>{const els=Array.from(document.querySelectorAll<HTMLElement>(".workCard,.sectionHeading,.serviceRow,.studioCopy,.contactNew h2,.contactAction"));if(!("IntersectionObserver" in window)||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const io=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){entry.target.classList.add("is-visible");io.unobserve(entry.target)}}},{threshold:0.08,rootMargin:"0px 0px -35px 0px"});for(const el of els){el.classList.add("reveal-ready");io.observe(el)}return()=>io.disconnect()},[]);return <main className="site"><header className="topbar"><a href="#home" className="brand" aria-label="MERIX STUDIO"><img src="/merix-logo.svg" alt="MERIX STUDIO" /></a><nav className={menu?"navigation active":"navigation"}>{t.nav.map((x,i)=><a onClick={()=>setMenu(false)} key={x} href={["#work","#services","#pricing","#studio","#contact"][i]}><span>0{i+1}</span>{x}</a>)}</nav><div className="headerTools"><div className="language" aria-label="Language">{(["SQ","EN","MK"] as Lang[]).map(x=><button key={x} type="button" aria-label={"Language "+x} aria-pressed={lang===x} onClick={()=>setLang(x)} className={lang===x?"chosen":""}>{x}</button>)}</div><button type="button" className="menuToggle" aria-expanded={menu} onClick={()=>setMenu(!menu)} aria-label={menu?"Close menu":"Open menu"}>{menu?<X size={24}/>:<Menu size={24}/>}</button></div></header>
-<section className="heroNew" id="home"><div className="heroGrid"/><div className="heroInner"><div className="eyebrow"><span className="liveDot"/>{t.eyebrow}</div><h1><span>{t.hero}</span><span>{t.hero2}</span><span className="outlineText">{t.hero3}</span></h1><div className="heroBottom"><p>{t.description}</p><div className="heroActions"><a href="#work" className="roundAction" aria-label={t.discover}><ArrowDownRight size={27}/></a><span>{t.discover}</span></div></div></div><div className="heroRail"><span>MERIX® / DIGITAL CRAFT</span><span>{t.scroll} ↓</span></div><div className="heroIndex">M<span>®</span></div></section>
+<section className="heroNew" id="home" onPointerMove={moveHero} onPointerLeave={resetHero}>
+  <div className="heroScene">
+    <div className="heroGrid" aria-hidden="true"/>
+    <div className="heroLight" aria-hidden="true"/>
+    <div className="heroOrbit" aria-hidden="true">
+      <div className="heroOrbitTrack"/>
+      <div className="heroOrbitRing"/>
+      <div className="heroOrbitCore">M<span>®</span></div>
+    </div>
+    <div className="heroInner">
+      <div className="eyebrow"><span className="liveDot"/>{t.eyebrow}</div>
+      <h1><span>{t.hero}</span><span>{t.hero2}</span><span className="outlineText">{t.hero3}</span></h1>
+      <div className="heroBottom">
+        <p>{t.description}</p>
+        <div className="heroActions">
+          <a href="#work" className="roundAction" aria-label={t.discover}><ArrowDownRight size={27}/></a>
+          <span>{t.discover}</span>
+        </div>
+      </div>
+    </div>
+    <div className="heroRail"><span>MERIX® / DIGITAL CRAFT</span><span>{t.scroll} ↓</span></div>
+  </div>
+</section>
 <div className="marqueeNew"><span>DESIGN THAT MATTERS</span><span className="tickerSeparator" aria-hidden="true">—</span><span>BUILT TO PERFORM</span><span className="tickerSeparator" aria-hidden="true">—</span><span>MADE TO STAND OUT</span><span className="tickerSeparator" aria-hidden="true">—</span></div>
 <section className="sectionNew workNew" id="work"><div className="sectionHeading"><div className="smallTag"><span>01 /</span> {t.selected}</div><h2>{t.projects}</h2><p>{t.note}</p></div><div className="worksGrid">{projects.map(p=><article className={"workCard "+p.className} key={p.id}><div className="workVisual"><div className="visualTop"><span>MERIX STUDIO / {p.id}</span><span>{p.year}</span></div><div className="visualCenter"><div className="monogram">{p.initial}</div><div className="visualName">{p.name}</div><div className="visualCaption">{p.caption}</div></div><div className="visualBottom"><span>MERIX PROJECT</span><MoveUpRight size={21} aria-hidden="true"/></div></div><div className="workMeta"><div><span>{p.category}</span><h3>{p.name}</h3></div><span className="projectCounter">{p.id} / 05</span></div></article>)}</div></section>
 <section className="sectionNew servicesNew" id="services"><div className="sectionHeading"><div className="smallTag"><span>02 /</span> {t.services}</div><h2>{t.serviceTitle}</h2></div><div className="serviceRows">{services.map(s=><div className="serviceRow" key={s.id}><span className="serviceId">{s.id}</span><h3>{s.name}</h3><p>{s.desc}</p><ArrowUpRight size={24}/></div>)}</div></section>
