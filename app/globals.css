@@ -96,3 +96,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .heroIndex{display:none!important}
 .sectionHeading h2{font-size:clamp(33px,9vw,42px)!important;overflow-wrap:break-word}
 }
+
+/* Crisp readable official logo: vector subtitle, not the pixelated traced letters */
+.brand img,.footerNew img{image-rendering:auto!important;filter:drop-shadow(0 0 3px rgba(255,255,255,.25))!important;animation:none!important}
+@media(max-width:600px){.brand{width:145px!important;flex-basis:145px!important}.brand img{width:145px!important;height:65px!important;object-fit:contain!important}}
