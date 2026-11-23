@@ -122,3 +122,148 @@ html,body{max-width:100%;overflow-x:hidden}
 .brand>img{width:145px!important;height:auto!important;max-height:68px!important;object-fit:contain!important;object-position:center!important;filter:none!important;animation:none!important}
 .footerNew>img{width:130px!important;height:auto!important;max-height:70px!important;object-fit:contain!important}
 @media(max-width:600px){.brand{width:128px!important;flex-basis:128px!important;height:60px!important}.brand>img{width:128px!important;height:auto!important;max-height:60px!important}}
+
+.pricing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr);
+  gap: clamp(32px, 6vw, 100px);
+  align-items: start;
+  padding-block: clamp(68px, 8vw, 115px);
+  border-top: 1px solid #ffffff18;
+}
+
+.pricing .pricingIntro {
+  margin-bottom: 0;
+}
+
+.pricingIntro .smallTag {
+  color: #ff6068;
+  text-transform: uppercase;
+}
+
+.pricingIntro h2 {
+  font-size: clamp(38px, 4.4vw, 70px);
+  text-wrap: balance;
+}
+
+.pricingIntro > p {
+  max-width: 33ch;
+  color: #aaaead;
+  font-size: 15px;
+  line-height: 1.65;
+  letter-spacing: normal;
+}
+
+.pricingList {
+  display: grid;
+  gap: 10px;
+}
+
+.pricingPlan {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px 28px;
+  align-items: center;
+  padding: 24px clamp(18px, 3vw, 36px);
+  background: #121415;
+  border: 1px solid #ffffff14;
+  border-radius: 14px;
+}
+
+.pricingPlan--business {
+  background: #221619;
+  border-color: #ff60686e;
+}
+
+.pricingPlan h3 {
+  margin: 0 0 12px;
+  font: 600 clamp(21px, 2.4vw, 30px)/1.15 'Space Grotesk', sans-serif;
+  letter-spacing: -.035em;
+}
+
+.pricingPlan ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 16px;
+  color: #b9bcba;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.pricingPlan li::marker {
+  color: #ff6068;
+}
+
+.pricingOffer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.pricingAmount {
+  margin: 0;
+  color: #b9bcba;
+  font-size: 13px;
+  text-align: right;
+}
+
+.pricingAmount strong {
+  color: #f2f1ee;
+  font: 700 clamp(32px, 4vw, 52px)/1 'Space Grotesk', sans-serif;
+  letter-spacing: -.06em;
+}
+
+.pricingAmount .pricingQuote {
+  font-size: 19px;
+  letter-spacing: -.02em;
+}
+
+.pricingOffer a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border: 1px solid #ffffff36;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.pricingOffer a svg {
+  flex: none;
+}
+
+.pricingOffer a:hover,
+.pricingOffer a:focus-visible {
+  border-color: #ff6068;
+  color: #ff8087;
+}
+
+@media (max-width: 900px) {
+  .pricing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .pricingPlan {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pricingOffer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid #ffffff20;
+  }
+
+  .pricingAmount {
+    text-align: left;
+  }
+}
