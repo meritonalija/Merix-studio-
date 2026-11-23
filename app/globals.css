@@ -327,6 +327,7 @@ html,body{max-width:100%;overflow-x:hidden}
 }
 
 .portfolioMonitor { top: 9%; right: 6%; width: 65%; }
+.portfolioCard--alija .portfolioMonitor { top: 7%; inset-inline: 0; margin-inline: auto; width: 68%; }
 .portfolioPhone { bottom: 8%; left: 11%; width: 20%; }
 
 .portfolioCard:hover .portfolioMonitor { transform: translate(2%, -3%); }
@@ -369,95 +370,114 @@ html,body{max-width:100%;overflow-x:hidden}
   border-radius: clamp(8px, 1.6vw, 18px);
 }
 
-.portfolioPhone .portfolioSampleBody {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto 1fr;
-  padding: 9%;
-}
-
-.portfolioPhone .portfolioSampleBar span {
-  display: none;
-}
-
-.portfolioSample {
+.invoicePreview {
+  container-type: inline-size;
   height: 100%;
-  display: grid;
-  grid-template-rows: 21% 1fr;
-  color: #132026;
+  padding: 3%;
+  background: #f1ecec;
+  color: #32252a;
   font-family: 'DM Sans', sans-serif;
+  line-height: 1.2;
 }
 
-.portfolioSampleBar {
-  display: flex;
-  align-items: center;
-  gap: 5%;
-  padding-inline: 7%;
-  background: #fbfaf7;
-}
-
-.portfolioSampleBar strong {
-  margin-right: auto;
-  font-size: clamp(4px, .6vw, 8px);
-}
-
-.portfolioSampleBar span,
-.portfolioSampleCopy span {
-  width: 12%;
-  height: 2px;
-  background: currentColor;
-  opacity: .35;
-}
-
-.portfolioSampleBody {
+.invoicePreviewHeader {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 7%;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  padding: 7%;
-  background: color-mix(in srgb, var(--project-color) 32%, #edf0ed);
+  gap: 2cqw;
+  padding: 3cqw;
+  border-radius: 1.5cqw;
+  background: linear-gradient(105deg, #a71331, #ce173a 55%, #a71331);
+  color: #fff;
 }
 
-.portfolioSampleCopy {
+.invoicePreviewHeader strong {
+  font-size: 4cqw;
+}
+
+.invoicePreviewHeader small {
+  display: block;
+  margin-top: .8cqw;
+  color: #ffe0e6;
+  font-size: 2.3cqw;
+}
+
+.invoicePreviewMark {
   display: grid;
-  gap: 5px;
+  width: 11cqw;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #be1536;
+  font-size: 4.5cqw;
+  font-style: italic;
 }
 
-.portfolioSampleCopy strong {
-  font-size: clamp(5px, .75vw, 11px);
-  line-height: 1.13;
-}
-
-.portfolioSampleCopy span { width: 68%; }
-.portfolioSampleCopy span:last-child { width: 44%; }
-
-.portfolioSampleGraphic {
+.invoicePreviewActions {
   display: flex;
-  gap: 5%;
-  align-items: stretch;
-  min-width: 0;
-  height: 95%;
+  justify-content: flex-end;
+  gap: .8cqw;
+  font-size: 2cqw;
 }
 
-.portfolioSampleGraphic i {
-  flex: 1;
-  border: 2px solid #253134;
-  background: linear-gradient(135deg, #c8d8d6, #396271 75%);
+.invoicePreviewActions span,
+.invoicePreviewBackup {
+  padding: 1cqw;
+  border: 1px solid #c84c6566;
+  border-radius: 1cqw;
 }
 
-.portfolioCard--besa .portfolioSampleGraphic i {
-  background: linear-gradient(90deg, #634a3a 65%, #b8977b 68%, #5d4434 72%);
+.invoicePreviewBody {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  gap: 1.6cqw;
+  margin-top: 2cqw;
 }
 
-.portfolioCard--alija .portfolioSampleGraphic {
-  flex-direction: column;
-  padding: 8%;
-  border-radius: 3px;
-  background: #f8faf9;
+.invoicePreviewPanel {
+  padding: 2cqw;
+  border: 1px solid #e8dce0;
+  border-radius: 1.5cqw;
+  background: #fff;
+  font-size: 2.2cqw;
 }
 
-.portfolioCard--alija .portfolioSampleGraphic i {
-  border: 0;
-  background: linear-gradient(90deg, #a3aba7 29%, #edf0ed 29% 71%, #b8a26b 71%);
+.invoicePreviewPanel > strong {
+  display: inline-block;
+  padding-left: 1cqw;
+  border-left: .6cqw solid #be1536;
+  font-size: 2.8cqw;
+}
+
+.invoicePreviewFields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.6cqw 1cqw;
+  margin-top: 2cqw;
+}
+
+.invoicePreviewFields span:last-child {
+  grid-column: span 2;
+}
+
+.invoicePreviewFields b {
+  display: block;
+  margin-top: .6cqw;
+  padding: 1cqw;
+  border: 1px solid #e8dce0;
+  border-radius: .8cqw;
+  background: #faf9f9;
+  font-weight: 500;
+}
+
+.invoicePreviewPanel p {
+  margin: 2cqw 0;
+}
+
+.invoicePreviewBackup {
+  display: inline-block;
+  color: #7a2035;
 }
 
 .portfolioInfo {

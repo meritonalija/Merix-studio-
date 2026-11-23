@@ -65,17 +65,34 @@ function ProjectScreen({ project, mobile }: { project: Project; mobile: boolean 
   }
 
   return (
-    <div className="portfolioSample">
-      <div className="portfolioSampleBar">
-        <strong>{project.name}</strong>
-        <span /><span /><span />
-      </div>
-      <div className="portfolioSampleBody">
-        <div className="portfolioSampleCopy">
-          <strong>{project.type}</strong>
-          <span /><span />
+    <div className="invoicePreview" lang="sq">
+      <div className="invoicePreviewHeader">
+        <div>
+          <strong>Alija Komerc · Faturat</strong>
+          <small>Llogaritje automatike të faturave</small>
         </div>
-        <div className="portfolioSampleGraphic"><i /><i /><i /></div>
+        <b className="invoicePreviewMark">AK</b>
+        <div className="invoicePreviewActions">
+          <span>Faturë e re</span>
+          <span>Ruaj PDF</span>
+          <span>Printo</span>
+        </div>
+      </div>
+      <div className="invoicePreviewBody">
+        <div className="invoicePreviewPanel">
+          <strong>Fatura dhe klienti</strong>
+          <div className="invoicePreviewFields">
+            <span>Numri i faturës<b>C-0001</b></span>
+            <span>Data<b>11/11/2026</b></span>
+            <span>Qyteti i lëshimit<b>Kumanovo</b></span>
+            <span>Emri i klientit<b>Emri i biznesit</b></span>
+          </div>
+        </div>
+        <div className="invoicePreviewPanel">
+          <strong>Faturat e ruajtura</strong>
+          <p>Ende nuk ka fatura.</p>
+          <span className="invoicePreviewBackup">Ruaj kopje rezervë</span>
+        </div>
       </div>
     </div>
   );
@@ -92,9 +109,11 @@ export function ProjectCards({ lang }: { lang: keyof typeof labels }) {
             <div className="portfolioMonitor">
               <div className="portfolioScreen"><ProjectScreen project={project} mobile={false} /></div>
             </div>
-            <div className="portfolioPhone">
-              <div className="portfolioScreen"><ProjectScreen project={project} mobile /></div>
-            </div>
+            {project.id !== "alija" && (
+              <div className="portfolioPhone">
+                <div className="portfolioScreen"><ProjectScreen project={project} mobile /></div>
+              </div>
+            )}
           </div>
           <div className="portfolioInfo">
             <p className="portfolioType">{project.type}</p>
