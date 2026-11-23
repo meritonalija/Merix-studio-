@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-const palette = ["#7754ff", "#53a7ff", "#52efff", "#dbfcff"];
+const palette = ["#838383", "#aeaeae", "#dedede", "#ffffff"];
 const stroke = [[-.76, .76], [-.76, -.76], [0, .08], [.76, -.76], [.76, .76]];
 
 function makeParticle(index: number) {
