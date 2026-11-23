@@ -37,17 +37,18 @@
 }
 @media(prefers-reduced-motion:reduce){.heroNew .heroInner,.workCard,.sectionHeading,.studioCopy,.contactNew h2,.workVisual:before,.workVisual:after,.marqueeNew span{animation:none!important}}
 
-/* Scroll-driven entrance animations: no rotating decorative elements */
-.workVisual:before,.workVisual:after{animation:none!important}
-.marqueeNew span{animation:none!important}
+
+/* Reliable scroll entrances: IntersectionObserver adds .is-visible on iOS too. */
+.workVisual:before,.workVisual:after,.marqueeNew span{animation:none!important}
 .workCard:hover .visualCenter{transform:none}
 .workCard,.sectionHeading,.studioCopy,.contactNew h2{animation:none!important}
-@supports (animation-timeline:view()){
-  .workCard{animation:merixAppear .85s cubic-bezier(.18,.8,.2,1) both!important;animation-timeline:view()!important;animation-range:entry 0% entry 90%!important}
-  .sectionHeading{animation:merixAppear .75s ease-out both!important;animation-timeline:view()!important;animation-range:entry 0% entry 95%!important}
-  .serviceRow{animation:merixAppear .7s ease-out both;animation-timeline:view();animation-range:entry 0% entry 100%}
-  .studioCopy{animation:merixAppear .8s ease-out both!important;animation-timeline:view()!important;animation-range:entry 0% entry 90%!important}
-  .contactNew h2,.contactAction{animation:merixAppear .8s ease-out both!important;animation-timeline:view()!important;animation-range:entry 0% entry 95%!important}
+.reveal-ready{opacity:0;transform:translate3d(0,44px,0);filter:blur(5px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.75,.2,1),filter .75s ease;will-change:opacity,transform}
+.reveal-ready.is-visible{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
+.serviceRow.reveal-ready{transition-delay:.08s}
+.heroNew h1 .outlineText{display:block;max-width:100%;overflow-wrap:anywhere}
+@media(max-width:600px){
+.heroNew h1{font-size:clamp(39px,10vw,58px);letter-spacing:-.075em;max-width:100%;overflow-wrap:anywhere}
+.heroNew h1 .outlineText{font-size:clamp(30px,7.2vw,43px);letter-spacing:-.06em;line-height:1.28;overflow-wrap:normal;word-break:normal}
+.heroNew .heroInner{padding-top:95px}
 }
-@keyframes merixAppear{0%{opacity:0;transform:translate3d(0,55px,0);filter:blur(7px)}100%{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}
-@media(prefers-reduced-motion:reduce){.workCard,.sectionHeading,.serviceRow,.studioCopy,.contactNew h2,.contactAction{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}}
+@media(prefers-reduced-motion:reduce){.reveal-ready{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}}
