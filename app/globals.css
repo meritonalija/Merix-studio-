@@ -110,3 +110,9 @@ html,body{max-width:100%;overflow-x:hidden}
 .footerLogo{width:135px;height:70px}
 .footerLogo img{max-height:44px!important}
 @media(max-width:600px){.brand{width:145px!important;flex-basis:145px!important}.logoLockup img{max-height:45px!important}.logoStudio{font-size:9px;letter-spacing:2px}.logoTagline{font-size:5.1px;letter-spacing:.25px}}
+
+/* Restore original compact MERIX logo presentation */
+.brand{width:126px!important;flex-basis:126px!important;height:64px!important;overflow:hidden!important}
+.brand>img{width:126px!important;height:64px!important;object-fit:contain!important;margin:0!important;display:block!important;filter:drop-shadow(0 0 2px #ffffff44)!important;animation:none!important}
+.footerNew>img{width:110px!important;height:60px!important;object-fit:contain!important;filter:none!important;animation:none!important}
+@media(max-width:600px){.brand{width:116px!important;flex-basis:116px!important;height:58px!important}.brand>img{width:116px!important;height:58px!important}}
