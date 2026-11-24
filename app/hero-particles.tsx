@@ -40,6 +40,7 @@ function makeParticle() {
     rx: Math.cos(angle) * spread,
     ry: Math.sin(angle) * spread,
     rz: (Math.random() - .5) * .8,
+    phase: angle * 2 + spread * 5,
     size: .65 + Math.random() * 1.45,
     dx: 0,
     dy: 0,
@@ -66,6 +67,8 @@ export function HeroParticles() {
     let height = 1;
     let visible = false;
     let frame = 0;
+    let lastFrame = 0;
+    let driftTime = 0;
     let yaw = 0;
     let pitch = 0;
     const touch = window.matchMedia("(pointer: coarse)");
@@ -73,9 +76,11 @@ export function HeroParticles() {
     let formation = preference.matches ? 1 : 0;
     const pointer = { x: 0, y: 0, active: false };
 
-    function draw() {
+    function draw(now: number) {
       frame = 0;
       const still = preference.matches;
+      if (!still && lastFrame) driftTime += Math.min(now - lastFrame, 40) * .001;
+      lastFrame = now;
       const compact = width <= 700;
       const scale = Math.min(width * (compact ? .37 : .24), height * (compact ? .24 : .39), 355);
       const { x: centerX, y: centerY } = heroParticleCenter(width, height);
@@ -84,6 +89,10 @@ export function HeroParticles() {
       formation = still ? 1 : Math.abs(target - formation) < .001 ? target : formation + (target - formation) * .09;
       const assembled = formation * formation * (3 - 2 * formation);
       const morph = 1 - assembled;
+      const flow = driftTime * 1.45;
+      const rotation = driftTime * .22;
+      const flowCos = Math.cos(rotation);
+      const flowSin = Math.sin(rotation);
       yaw += ((pointer.active ? (pointer.x / width - .5) * .85 : 0) - yaw) * .07;
       pitch += ((pointer.active ? (.5 - pointer.y / height) * .55 : 0) - pitch) * .07;
 
@@ -99,12 +108,17 @@ export function HeroParticles() {
       context!.clearRect(0, 0, width, height);
       for (let color = 0; color < palette.length; color++) {
         context!.fillStyle = palette[color];
-        context!.globalAlpha = (.46 + color * .14) * (.37 + assembled * .63);
+        context!.globalAlpha = (.46 + color * .14) * (.56 + assembled * .44);
         for (let index = color; index < count; index += palette.length) {
           const point = particles[index];
-          const x = point.mx + (point.rx - point.mx) * morph;
-          const y = point.my + (point.ry - point.my) * morph;
-          const z = point.mz + (point.rz - point.mz) * morph;
+          const wave = Math.sin(flow + point.phase);
+          const ripple = Math.cos(flow * .78 - point.phase);
+          const cloudX = point.rx * flowCos - point.ry * flowSin + wave * .17;
+          const cloudY = (point.rx * flowSin + point.ry * flowCos) * .72 + ripple * .18;
+          const cloudZ = point.rz + wave * .26;
+          const x = point.mx + (cloudX - point.mx) * morph;
+          const y = point.my + (cloudY - point.my) * morph;
+          const z = point.mz + (cloudZ - point.mz) * morph;
           const depth = z * cosY - x * sinY;
           const perspective = 2.8 / (2.8 - depth);
           const px = centerX + (x * cosY + z * sinY) * scale * perspective;
@@ -125,6 +139,7 @@ export function HeroParticles() {
 
     function refresh() {
       cancelAnimationFrame(frame);
+      lastFrame = 0;
       frame = requestAnimationFrame(draw);
     }
 
