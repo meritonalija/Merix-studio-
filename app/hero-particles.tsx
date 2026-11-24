@@ -68,7 +68,7 @@ export function HeroParticles() {
       lightPulse *= .92;
       scrollProgress += (Math.max(0, Math.min(1, -hero!.getBoundingClientRect().top / height)) - scrollProgress) * .1;
 
-      const morphTime = Math.max(0, elapsed - 2.9);
+      const morphTime = Math.max(0, elapsed - 4.4);
       const angle = morphTime * .65;
       const cycle = Math.max(0, Math.min(1, (.5 - .65 * Math.cos(angle)) + scrollProgress * .85));
       const morph = still ? 0 : cycle * cycle * (3 - 2 * cycle);
