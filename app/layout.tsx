@@ -8,4 +8,4 @@ export const metadata: Metadata = {
  openGraph: { title: "MERIX STUDIO — Digital Solutions", description: "Websites with character. Software that solves real problems.", type: "website", siteName: "MERIX STUDIO" },
 };
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#090909" };
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="sq"><body>{children}</body></html>; }
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="en"><body>{children}</body></html>; }
