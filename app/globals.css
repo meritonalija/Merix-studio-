@@ -549,7 +549,6 @@ html,body{max-width:100%;overflow-x:hidden}
   .portfolioCard:hover .portfolioPhone { transform: none; }
 }
 
-.site,
 .brand {
   position: relative;
 }
@@ -598,52 +597,24 @@ html,body{max-width:100%;overflow-x:hidden}
   filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px #fff);
 }
 
-.introLight {
-  position: absolute;
-  inset: 0 0 auto;
-  z-index: 11;
-  pointer-events: none;
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .navigation.active .navTrace text {
+    animation: menuContour 420ms var(--menu-trace-delay, 0ms) both;
+  }
+
+  .navigation a:nth-child(2) { --menu-trace-delay: 150ms; }
+  .navigation a:nth-child(3) { --menu-trace-delay: 300ms; }
+  .navigation a:nth-child(4) { --menu-trace-delay: 450ms; }
+  .navigation a:nth-child(5) { --menu-trace-delay: 600ms; }
 }
 
-.introLightDot,
-.introLightBurst {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0;
-}
-
-.introLightDot {
-  width: 7px;
-  height: 7px;
-  offset-path: var(--intro-route, none);
-  background: #fff;
-  box-shadow: 0 0 9px 2px #fff, 0 0 22px 5px #ffffff9c;
-}
-
-.introLightDot:nth-child(2) {
-  width: 5px;
-  height: 5px;
-  background: #c0c0c0;
-  box-shadow: 0 0 10px 2px #ffffffab;
-}
-
-.introLightDot:nth-child(3) {
-  width: 3px;
-  height: 3px;
-  background: #9e9e9e;
-  box-shadow: 0 0 7px 2px #ffffff7d;
-}
-
-.introLightBurst {
-  width: 54px;
-  height: 54px;
-  translate: -50% -50%;
-  border: 1px solid #efefef;
-  box-shadow: 0 0 22px #ffffff85, inset 0 0 14px #ffffff55;
+@keyframes menuContour {
+  0% { opacity: 0; stroke-dashoffset: 0; }
+  24%, 76% { opacity: 1; }
+  100% { opacity: 0; stroke-dashoffset: -14; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .introLight,
   .brandGlow,
   .navTrace {
     display: none;
